@@ -88,26 +88,64 @@ jQuery(document).ready(function($) {
         i.next('.validation').html((ierror ? (i.attr('data-msg') != undefined ? i.attr('data-msg') : 'wrong Input') : '')).show('blind');
       }
     });
+
+    //$('#name').val('');
     if (ferror) return false;
     else var str = $(this).serialize();
-    $.ajax({
-      type: "POST",
-      url: "contactFrom/contactForm.php",
-      data: str,
-      success: function(msg) {
-        // alert(msg);
-        if (msg == 'OK') {
-          $("#sendmessage").addClass("show");
-          $("#errormessage").removeClass("show");
-          $('.contactForm').find("input, textarea").val("");
-        } else {
-          $("#sendmessage").removeClass("show");
-          $("#errormessage").addClass("show");
-          $('#errormessage').html(msg);
-        }
 
-      }
-    });
+    console.log(str)
+    // $.ajax({
+    //   type: "POST",
+    //   url: "contactFrom/contactForm.php",
+    //   data: str,
+    //   success: function(msg) {
+    //     // alert(msg);
+    //     if (msg == 'OK') {
+    //       $("#sendmessage").addClass("show");
+    //       $("#errormessage").removeClass("show");
+    //       $('.contactForm').find("input, textarea").val("");
+    //     } else {
+    //       $("#sendmessage").removeClass("show");
+    //       $("#errormessage").addClass("show");
+    //       $('#errormessage').html(msg);
+    //     }
+    //
+    //   }
+    // });
+
+    // $.ajax({
+    //   type:"POST",
+    //   url: "https://mandrillapp.com/api/1.0/messages/send.json",
+    //   data:{
+    //     'key': 'bdc5ff8c14956316f1166b1594a5da41-us4',
+    //     'message': {
+    //       'from_email':'alex.pico.amaya@gmail.com',
+    //       'to':[
+    //         {
+    //           'email': 'naitsabes29@gmail.com',
+    //           'name': 'prueba de correo',
+    //           'type': 'to'
+    //         }
+    //       ],
+    //       'autotext':'true',
+    //       'subject':'prueba de formulario',
+    //       'html': str
+    //     }
+    //   }
+    // }).done(function(response) {
+    //   console.log(response); // if you're into that sorta thing
+    // });
+
+    Email.send({
+      SecureToken : "C973D7AD-F097-4B95-91F4-40ABC5567812",
+      To : 'naitsabes29@gmail.com',
+      From : "you@isp.com",
+      Subject : "This is the subject",
+      Body : "And this is the body"
+    }).then(
+      message => alert(message)
+    );
+
     return false;
   });
 
